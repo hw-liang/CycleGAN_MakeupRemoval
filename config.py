@@ -26,7 +26,7 @@ class DefaultConfig(object):
 
     # optimization options
     max_epoch = 200
-    batchSize = 1
+    batchSize = 3
     beta1 = 0.5
     lr = 2e-4  # initial learning rate adam
     lr_policy = 'lambda'

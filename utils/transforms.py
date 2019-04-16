@@ -82,3 +82,5 @@ class ImageTransformer(object):
         transform_list += [T.ToTensor(),
                            T.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
         self.transform_list = T.Compose(transform_list)
+    def __call__(self, img):
+        return self.transform_list(img)

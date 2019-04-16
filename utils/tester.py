@@ -143,7 +143,7 @@ class Tester(object):
 
     def merge_images(self, sources, targets):
         _, _, h, w = sources.shape
-        row = int(np.sqrt(self.opt.batch_size))
+        row = int(np.sqrt(self.opt.batchSize))
         merged = np.zeros([3, row * h, row * w * 2])
         for (idx, s, t) in (zip(range(row ** 2), sources, targets, )):
             i = idx // row
