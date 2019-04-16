@@ -12,11 +12,12 @@ import torch
 from models.networks import define_D, define_G
 
 def mkdir_if_missing(dir_path):
-    try:
-        os.makedirs(dir_path)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
+    if not os.path.exists(dir_path):
+        try:
+            os.makedirs(dir_path)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
 
 class Logger(object):
     """

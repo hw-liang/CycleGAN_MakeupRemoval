@@ -11,6 +11,7 @@ import numpy as np
 import torch
 import scipy
 import scipy.misc
+from .serialization import mkdir_if_missing
 
 class Tester(object):
     def __init__(self, opt, G_A, G_B, D_A, D_B, summary_writer):
@@ -45,7 +46,10 @@ class Tester(object):
             data_time.update(time.time() - start)
             self._forward()
 
-            self.sampleimages(epoch,i)
+            display_dir = os.path.join(self.opt.save_dir, "%s" % self.opt.checkpoint_epoch)
+            mkdir_if_missing(display_dir)
+            if (i+1) % self.opt.display_freq == 0:
+                self.sampleimages(epoch,i,display_dir)
 
             self.set_requires_grad([self.G_A, self.G_B, self.D_A, self.D_B], False)
             self.backward_G()
@@ -127,17 +131,17 @@ class Tester(object):
         self.fake_A = self.G_B(self.real_B)
         self.rec_B = self.G_A(self.fake_A)
 
-    def sampleimages(self, epoch, i):
+    def sampleimages(self, epoch, i, display_dir):
         A, fake_A = self.to_data(self.real_A), self.to_data(self.fake_A)
         B, fake_B = self.to_data(self.real_B), self.to_data(self.fake_B)
 
         merged = self.merge_images(A, fake_B)
-        path = os.path.join(self.opt.save_dir, 'sample-{}-{}-A-B.png'.format(epoch,i))
+        path = os.path.join(display_dir, 'sample-{}-{}-A-B.png'.format(epoch,i))
         scipy.misc.imsave(path, merged)
         print('Saved {}'.format(path))
 
         merged = self.merge_images(B, fake_A)
-        path = os.path.join(self.opt.save_dir, 'sample-{}-{}-B-A.png'.format(epoch,i))
+        path = os.path.join(display_dir, 'sample-{}-{}-B-A.png'.format(epoch,i))
         scipy.misc.imsave(path, merged)
         print('Saved {}'.format(path))
 
