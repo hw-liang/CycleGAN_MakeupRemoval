@@ -21,7 +21,7 @@ class DefaultConfig(object):
     which_direction = 'AtoB'
 
     serial_batches = True
-    pool_size = 50
+    pool_size = 0
     no_flip = True
 
     # optimization options
@@ -48,8 +48,8 @@ class DefaultConfig(object):
     use_gpu = torch.cuda.is_available()
     gpu_ids = [0]
 
-    lambda_A = 10.0
-    lambda_B = 10.0
+    lambda_A = 0.015
+    lambda_B = 0.015
     lambda_identity = 0.5
 
     # miscs

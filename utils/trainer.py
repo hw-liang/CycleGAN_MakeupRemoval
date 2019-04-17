@@ -49,6 +49,7 @@ class Trainer(object):
             self.optimizer_G.zero_grad()
             self.backward_G()
             self.optimizer_G.step()
+
             # optimizer D_A and D_B
             self.set_requires_grad([self.D_A, self.D_B], True)
             self.optimizer_D.zero_grad()
