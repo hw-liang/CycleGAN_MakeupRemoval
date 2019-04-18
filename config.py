@@ -12,7 +12,7 @@ class DefaultConfig(object):
     # dataset options
     dataroot = './datasets/makeupremoval'
     dataset_mode = 'unaligned'
-    phase = 'test'  # "train" or "test"
+    phase = 'train'  # "train" or "test"
     checkpoint_epoch = 5
 
     resize_or_crop = 'resize_and_crop'
@@ -36,24 +36,24 @@ class DefaultConfig(object):
     # model options
     input_nc = 3  # number of input image channels
     output_nc = 3  # number of output image channels
-    ngf = 64  # number of generator filters in first conv layer
-    ndf = 64  # number of discriminator filters in first conv layer
+    ngf = 32  # number of generator filters in first conv layer
+    ndf = 32  # number of discriminator filters in first conv layer
     which_model_netD = 'basic'
-    which_model_netG = 'resnet_9blocks'
+    which_model_netG = 'unet_128'
     n_layers_D = 3  # only used if which_model_netD == n_layers
     norm = 'instance'
     no_dropout = True  # no dropout for the generator
-    no_lsgan = True
+    no_lsgan = False
 
     use_gpu = torch.cuda.is_available()
     gpu_ids = [0]
 
-    lambda_A = 0.015
-    lambda_B = 0.015
+    lambda_A = 10
+    lambda_B = 10
     lambda_identity = 0.5
 
     # miscs
-    print_freq = 30
+    print_freq = 3
     save_freq = 10
     display_freq = 10
     save_dir = './result/makeupremoval'
@@ -69,6 +69,5 @@ class DefaultConfig(object):
     def _state_dict(self):
         return {k: getattr(self, k) for k, _ in DefaultConfig.__dict__.items()
                 if not k.startswith('_')}
-
 
 opt = DefaultConfig()

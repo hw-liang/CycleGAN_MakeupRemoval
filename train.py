@@ -109,7 +109,7 @@ def train_cycle_gan(**kwargs):
                 'epoch': epoch + 1,
             }, False, save_dir=opt.save_dir, filename='checkpoint_ep' + str(epoch + 1))
 
-
-
+if __name__ == '__main__':
+    train_cycle_gan()
 
 
