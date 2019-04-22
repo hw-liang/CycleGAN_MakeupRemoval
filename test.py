@@ -48,10 +48,10 @@ def test_cycle_gan(**kwargs):
         netG_B = torch.nn.DataParallel(netG_B).cuda()
         netD_A = torch.nn.DataParallel(netD_A).cuda()
         netD_B = torch.nn.DataParallel(netD_B).cuda()
-
+    
     # get tester
     cycleganTester = Tester(opt, netG_A, netG_B, netD_A, netD_B, summaryWriter)
-
+    
     for epoch in range(start_epoch, opt.max_epoch):
         # test over whole dataset
         cycleganTester.test(epoch, testloader)

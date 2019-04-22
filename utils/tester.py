@@ -47,9 +47,19 @@ class Tester(object):
             self._forward()
 
             display_dir = os.path.join(self.opt.save_dir, "%s" % self.opt.checkpoint_epoch)
+            gene_dir = os.path.join(self.opt.save_dir, "%s_gene" % self.opt.checkpoint_epoch)
+
+            AtoB = os.path.join(gene_dir,"AtoB")
+            BtoA = os.path.join(gene_dir,"BtoA") 
             mkdir_if_missing(display_dir)
+            mkdir_if_missing(gene_dir)
+            mkdir_if_missing(AtoB)
+            mkdir_if_missing(BtoA)
+
             if (i+1) % self.opt.display_freq == 0:
                 self.sampleimages(epoch,i,display_dir)
+            if (i+1) % self.opt.gene_freq == 0:
+                self.geneimages(epoch,i,gene_dir)
 
             self.set_requires_grad([self.G_A, self.G_B, self.D_A, self.D_B], False)
             self.backward_G()
@@ -139,11 +149,33 @@ class Tester(object):
         path = os.path.join(display_dir, 'sample-{}-{}-A-B.png'.format(epoch,i))
         scipy.misc.imsave(path, merged)
         print('Saved {}'.format(path))
-
+        
         merged = self.merge_images(B, fake_A)
         path = os.path.join(display_dir, 'sample-{}-{}-B-A.png'.format(epoch,i))
         scipy.misc.imsave(path, merged)
         print('Saved {}'.format(path))
+
+    def geneimages(self, epoch, i, gene_dir):
+        fake_A = self.to_data(self.fake_A)
+        fake_B = self.to_data(self.fake_B)
+        AtoB = os.path.join(gene_dir, "AtoB")
+        BtoA = os.path.join(gene_dir, "BtoA")
+        ### save to AtoB
+        fake_B = fake_B.transpose(0,2,3,1)
+        N,h,w,_ = fake_B.shape
+
+        for j in range(N):
+            temp = fake_B[j]
+            path = os.path.join(AtoB, 'sample-{}-{}-A-B-{}.png'.format(epoch,i,j))
+            scipy.misc.imsave(path, temp)
+
+        ### save to BtoA
+        fake_A = fake_A.transpose(0,2,3,1)
+        N,h,w,_ = fake_A.shape
+        for j in range(N):
+            temp = fake_A[j]
+            path = os.path.join(BtoA, 'sample-{}-{}-B-A-{}.png'.format(epoch,i,j))
+            scipy.misc.imsave(path, temp)
 
     def merge_images(self, sources, targets):
         _, _, h, w = sources.shape
@@ -155,7 +187,7 @@ class Tester(object):
             merged[:, i * h:(i + 1) * h, (j * 2) * h:(j * 2 + 1) * h] = s
             merged[:, i * h:(i + 1) * h, (j * 2 + 1) * h:(j * 2 + 2) * h] = t
         return merged.transpose(1, 2, 0)
-
+   
     def to_data(self,x):
         """Converts variable to numpy."""
         if self.opt.use_gpu:

@@ -13,20 +13,20 @@ class DefaultConfig(object):
     dataroot = './datasets/makeupremoval'
     dataset_mode = 'unaligned'
     phase = 'train'  # "train" or "test"
-    checkpoint_epoch = 5
+    checkpoint_epoch = 30
 
     resize_or_crop = 'resize_and_crop'
     loadSize = 96  # scale image to this size
     fineSize = 96  # then crop to this size
-    which_direction = 'AtoB'
+    which_direction = 'BtoA'
 
     serial_batches = True
     pool_size = 0
     no_flip = True
 
     # optimization options
-    max_epoch = 200
-    batchSize = 3
+    max_epoch = 1
+    batchSize = 4
     beta1 = 0.5
     lr = 2e-4  # initial learning rate adam
     lr_policy = 'lambda'
@@ -48,14 +48,15 @@ class DefaultConfig(object):
     use_gpu = torch.cuda.is_available()
     gpu_ids = [0]
 
-    lambda_A = 10
-    lambda_B = 10
+    lambda_A = 5
+    lambda_B = 5
     lambda_identity = 0.5
 
     # miscs
-    print_freq = 3
-    save_freq = 10
-    display_freq = 10
+    print_freq = 10
+    save_freq = 5
+    display_freq = 5
+    gene_freq = 1
     save_dir = './result/makeupremoval'
     workers = 10
     start_epoch = 0
