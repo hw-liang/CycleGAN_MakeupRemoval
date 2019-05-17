@@ -158,8 +158,8 @@ class Tester(object):
     def geneimages(self, epoch, i, gene_dir):
         fake_A = self.to_data(self.fake_A)
         fake_B = self.to_data(self.fake_B)
-        AtoB = os.path.join(gene_dir, "AtoB")
-        BtoA = os.path.join(gene_dir, "BtoA")
+        AtoB = os.path.join(gene_dir, "BtoA")
+        BtoA = os.path.join(gene_dir, "AtoB")
         ### save to AtoB
         fake_B = fake_B.transpose(0,2,3,1)
         N,h,w,_ = fake_B.shape

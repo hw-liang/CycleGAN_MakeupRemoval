@@ -51,7 +51,7 @@ def train_cycle_gan(**kwargs):
     use_sigmoid = opt.no_lsgan
     netD_A = define_D(opt.output_nc, opt.ndf, opt.which_model_netD, opt.n_layers_D, opt.norm, use_sigmoid)
     netD_B = define_D(opt.input_nc, opt.ndf, opt.which_model_netD, opt.n_layers_D, opt.norm, use_sigmoid)
-
+    # print(netD_A)
     optimizer_G = torch.optim.Adam(itertools.chain(netG_A.parameters(), netG_B.parameters()),
                                 lr=opt.lr, betas=(opt.beta1, 0.999))
     optimizer_D = torch.optim.Adam(itertools.chain(netD_A.parameters(), netD_B.parameters()),

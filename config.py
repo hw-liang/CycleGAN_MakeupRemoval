@@ -14,7 +14,7 @@ class DefaultConfig(object):
     dataset_mode = 'unaligned'
     phase = 'train'  # "train" or "test"
     checkpoint_epoch = 30
-
+    
     resize_or_crop = 'resize_and_crop'
     loadSize = 96  # scale image to this size
     fineSize = 96  # then crop to this size
@@ -36,10 +36,10 @@ class DefaultConfig(object):
     # model options
     input_nc = 3  # number of input image channels
     output_nc = 3  # number of output image channels
-    ngf = 32  # number of generator filters in first conv layer
-    ndf = 32  # number of discriminator filters in first conv layer
+    ngf = 64  # number of generator filters in first conv layer
+    ndf = 64  # number of discriminator filters in first conv layer
     which_model_netD = 'basic'
-    which_model_netG = 'unet_128'
+    which_model_netG = 'unet_256'
     n_layers_D = 3  # only used if which_model_netD == n_layers
     norm = 'instance'
     no_dropout = True  # no dropout for the generator
@@ -55,8 +55,9 @@ class DefaultConfig(object):
     # miscs
     print_freq = 10
     save_freq = 5
-    display_freq = 5
+    display_freq = 1
     gene_freq = 1
+
     save_dir = './result/makeupremoval'
     workers = 10
     start_epoch = 0

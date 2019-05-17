@@ -11,7 +11,8 @@ from pprint import pprint
 import torch
 from tensorboardX import SummaryWriter
 from torch.utils.data import DataLoader
-
+import numpy as np
+import random
 from config import opt
 from utils.serialization import Logger, load_checkpoint
 from datasets.data_provider import UnalignedDataset
@@ -20,7 +21,9 @@ from utils.tester import Tester
 def test_cycle_gan(**kwargs):
     opt._parse(kwargs)
     torch.manual_seed(opt.seed)
-
+    torch.cuda.manual_seed(opt.seed)
+    np.random.seed(opt.seed)
+    random.seed(opt.seed)
     # Write standard output into file
     sys.stdout = Logger(os.path.join(opt.save_dir, 'log_test.txt'))
 
